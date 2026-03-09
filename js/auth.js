@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeStorage();
     const currentPage = window.location.pathname.split("/").pop() || "";
     if (currentPage === "login.html" && isLoggedIn()) {
-        window.location.href = "Dashboard.html";
+        window.location.href = "home.html";
         return;
     }
 
@@ -104,7 +104,7 @@ function handleOtpSubmit(event) {
     localStorage.setItem("loggedDonorPhone", stored.phone);
     showAlert(alertBox, "Login successful", true);
     setTimeout(function () {
-        window.location.href = "Dashboard.html";
+        window.location.href = "home.html";
     }, 600);
 }
 
