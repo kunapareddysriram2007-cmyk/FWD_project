@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Donor</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="logo">Blood Donation Network</div>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="register.html" class="active">Register</a></li>
+                <li><a href="search.html">Search Donor</a></li>
+                <li><a href="requests.html">Requests</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div class="form-container">
+                <h2>Donor Registration</h2>
+                <form id="donorForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="number" id="age" min="18" max="65" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bloodGroup">Blood Group</label>
+                        <select id="bloodGroup" required>
+                            <option value="">Select</option>
+                            <option>O+</option>
+                            <option>O-</option>
+                            <option>A+</option>
+                            <option>A-</option>
+                            <option>B+</option>
+                            <option>B-</option>
+                            <option>AB+</option>
+                            <option>AB-</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" pattern="[0-9]{10}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="area">Area</label>
+                        <input type="text" id="area" required>
+                    </div>
+
+                    <input type="hidden" id="lat">
+                    <input type="hidden" id="lng">
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-secondary" id="detectLocationBtn">Detect Location</button>
+                        <button type="submit" class="btn btn-primary">Register Donor</button>
+                    </div>
+                </form>
+
+                <div id="locationLoading" class="hidden" style="text-align: center; margin-top: 1rem;">
+                    <div class="spinner"></div>
+                    <p>Detecting your location...</p>
+                </div>
+                <div id="coordinatesInfo" class="info-box hidden" style="margin-top: 1rem;">
+                    <strong>Detected Coordinates:</strong>
+                    <p id="coordinatesText"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Blood Donation Portal</p>
+        </div>
+    </footer>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/navbar.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("donorForm");
+        const detectBtn = document.getElementById("detectLocationBtn");
+
+        detectBtn.addEventListener("click", function () {
+            const loading = document.getElementById("locationLoading");
+            if (!navigator.geolocation) {
+                alert("Geolocation is not supported by your browser.");
+                return;
+            }
+
+            loading.classList.remove("hidden");
+            detectBtn.disabled = true;
+
+            navigator.geolocation.getCurrentPosition(
+                async function (position) {
+    const lat = position.coords.latitude;
+    const lng = position.coords.longitude;
+
+    document.getElementById("lat").value = lat;
+    document.getElementById("lng").value = lng;
+
+    try {
+        const response = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`
+        );
+        const data = await response.json();
+
+        const address = data.address || {};
+
+        // Autofill city
+        document.getElementById("city").value =
+            address.city || address.town || address.village || "";
+
+        // Autofill area
+        document.getElementById("area").value =
+            address.suburb || address.neighbourhood || address.county || "";
+
+        // Show coordinates
+        document.getElementById("coordinatesText").textContent =
+            `Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}`;
+
+        document.getElementById("coordinatesInfo").classList.remove("hidden");
+
+    } catch (err) {
+        alert("Location detected but address could not be fetched.");
+    }
+
+    loading.classList.add("hidden");
+    detectBtn.disabled = false;
+},
+                function () {
+                    alert("Could not detect location.");
+                    loading.classList.add("hidden");
+                    detectBtn.disabled = false;
+                }
+            );
+        });
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const phone = document.getElementById("phone").value.trim();
+            if (!/^[0-9]{10}$/.test(phone)) {
+                alert("Please enter a valid 10-digit phone number.");
+                return;
+            }
+
+            const donor = {
+                name: document.getElementById("name").value.trim(),
+                age: document.getElementById("age").value.trim(),
+                blood: document.getElementById("bloodGroup").value,
+                phone: phone,
+                city: document.getElementById("city").value.trim(),
+                area: document.getElementById("area").value.trim(),
+                lat: document.getElementById("lat").value.trim(),
+                lng: document.getElementById("lng").value.trim()
+            };
+
+            const donors = JSON.parse(localStorage.getItem("donors")) || [];
+            if (donors.some(d => d.phone === donor.phone)) {
+                alert("This phone number is already registered.");
+                return;
+            }
+
+            donors.push(donor);
+            localStorage.setItem("donors", JSON.stringify(donors));
+            localStorage.setItem("loggedDonorPhone", donor.phone);
+
+            alert("Registration successful.");
+            window.location.href = "home.html";
+        });
+    });
+    </script>
+</body>
+</html>

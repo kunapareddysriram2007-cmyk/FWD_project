@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Donation Portal</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="logo">Blood Donation Network</div>
+            <ul>
+                <li><a href="home.html" class="active">Home</a></li>
+                <li><a href="register.html">Register</a></li>
+                <li><a href="search.html">Search Donor</a></li>
+                <li><a href="requests.html">Requests</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div class="hero">
+                <h1>Save Lives with Blood Donation</h1>
+                <p>Connect donors and patients through location-based matching.</p>
+                <button class="btn btn-primary btn-lg" onclick="window.location.href='register.html'">
+                    Start Donating
+                </button>
+            </div>
+
+            <h2 class="section-title">How It Works</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Register as Donor</h3>
+                    <p>Create a profile with your blood group and location.</p>
+                </div>
+                <div class="card">
+                    <h3>Find Nearby Donors</h3>
+                    <p>Search compatible donors sorted by nearest available location.</p>
+                </div>
+                <div class="card">
+                    <h3>Send Request</h3>
+                    <p>Request blood anonymously without exposing personal details.</p>
+                </div>
+                <div class="card">
+                    <h3>Manage Requests</h3>
+                    <p>Track incoming donation requests in one dashboard.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Blood Donation Portal. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/navbar.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Blood Donation Portal</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <main>
+        <div class="container">
+            <div class="login-container">
+                <div class="login-card">
+                    <div class="login-header">
+                        <h1>Blood Donation Network</h1>
+                        <p>Login to Your Account</p>
+                    </div>
+
+                    <div id="alertBox" class="alert alert-danger hidden"></div>
+
+                    <form id="loginForm">
+                        <div class="form-group" id="phoneGroup">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" placeholder="Enter your 10-digit phone number" required pattern="[0-9]{10}">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full-width" id="sendOtpBtn">Send OTP</button>
+                    </form>
+                    
+                    <!-- OTP verification section (hidden initially) -->
+                    <form id="otpForm" class="hidden">
+                        <div class="form-group">
+                            <label for="otp">Enter OTP</label>
+                            <input type="text" id="otp" name="otp" placeholder="6-digit code" required pattern="[0-9]{6}">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full-width">Verify OTP</button>
+                    </form>
+                    <div id="otpSentMessage" class="alert alert-info hidden"></div>
+
+                    <div class="switch-auth">
+                        <p>Don't have an account?</p>
+                        <a href="register.html" class="btn btn-secondary">Create Account</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Blood Donation Portal</p>
+        </div>
+    </footer>
+
+    <script src="../js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Donors - Blood Donation Portal</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="logo">Blood Donation Network</div>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="register.html">Register</a></li>
+                <li><a href="search.html" class="active">Search Donor</a></li>
+                <li><a href="requests.html">Requests</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+    <div id="requestModal" class="hidden" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    ">
+        <div style="background: white; padding: 1.5rem; border-radius: 8px; width: 90%; max-width: 420px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
+                <h3 style="margin:0;">Request Blood</h3>
+                <button onclick="closeRequestModal()" style="background:none;border:none;font-size:1.2rem;cursor:pointer;">x</button>
+            </div>
+            <div style="margin-bottom:1rem;">
+                <p id="requestModalDonorInfo"></p>
+            </div>
+            <div style="margin-bottom:1rem;">
+                <label><input type="checkbox" id="requestEmergencyCheckbox"> Emergency request</label>
+                <p style="font-size:0.85rem;color:#555;margin-top:0.25rem;">(If marked emergency and the recipient doesn't respond within 15 minutes the request will be considered denied/offline.)</p>
+            </div>
+            <div style="display:flex;gap:0.5rem;justify-content:flex-end;">
+                <button class="btn btn-secondary" onclick="closeRequestModal()">Cancel</button>
+                <button class="btn btn-primary" id="confirmRequestBtn">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+            <h2>Find Blood Donors Near You</h2>
+
+            <div class="form-container">
+                <form id="searchForm">
+                    <div class="form-group">
+                        <label for="bloodGroup">Blood Group *</label>
+                        <select id="bloodGroup" name="bloodGroup" required>
+                            <option value="">-- Select Blood Group --</option>
+                            <option value="O+">O+ (O Positive)</option>
+                            <option value="O-">O- (O Negative)</option>
+                            <option value="A+">A+ (A Positive)</option>
+                            <option value="A-">A- (A Negative)</option>
+                            <option value="B+">B+ (B Positive)</option>
+                            <option value="B-">B- (B Negative)</option>
+                            <option value="AB+">AB+ (AB Positive)</option>
+                            <option value="AB-">AB- (AB Negative)</option>
+                        </select>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-secondary" id="detectLocationBtn" style="flex: 1;">
+                            Detect My Location
+                        </button>
+                        <button type="submit" class="btn btn-primary" style="flex: 1;">
+                            Search Donors
+                        </button>
+                    </div>
+                </form>
+
+                <div id="locationLoading" class="hidden" style="text-align: center; margin: 1.5rem 0;">
+                    <div class="spinner"></div>
+                    <p>Detecting your location...</p>
+                </div>
+
+                <div id="detectedLocation" class="info-box hidden" style="margin: 1.5rem 0;">
+                    <strong>Your Location:</strong>
+                    <p id="locationText"></p>
+                </div>
+            </div>
+
+            <div id="resultsSection" class="hidden">
+                <h2 style="margin-top: 2rem;">Available Donors</h2>
+
+                <div id="noResults" class="alert alert-info hidden">
+                    No donors found for the selected blood group in your database.
+                </div>
+
+                <div id="searchLoading" class="hidden" style="text-align: center; padding: 2rem;">
+                    <div class="spinner"></div>
+                    <p>Searching for donors...</p>
+                </div>
+
+                <div class="table-container">
+                    <table id="donorsTable">
+                        <thead>
+                            <tr>
+                                <th>Donor Name</th>
+                                <th>Blood Group</th>
+                                <th>City / Area</th>
+                                <th>Distance (km)</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="donorsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="mySentRequestsSection" class="hidden" style="margin-top:2rem;">
+                <h2>My Sent Requests</h2>
+                <div id="noSentRequests" class="alert alert-info hidden">You have not sent any requests yet.</div>
+                <div class="table-container hidden" id="sentRequestsContainer">
+                    <table id="sentRequestsTable">
+                        <thead>
+                            <tr>
+                                <th>Donor Name</th>
+                                <th>Donor City</th>
+                                <th>Requested Time</th>
+                                <th>Emergency</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sentRequestsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin: 2rem 0;">
+                <strong>How it works:</strong>
+                <ol style="margin-top: 1rem; margin-left: 1rem;">
+                    <li>Select your required blood group</li>
+                    <li>Click "Detect My Location"</li>
+                    <li>Click "Search Donors"</li>
+                    <li>Results are sorted by nearest available coordinates</li>
+                </ol>
+            </div>
+        </div>
+    </main>
+
+    <div id="mapModal" class="hidden" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    ">
+        <div style="background: white; padding: 2rem; border-radius: 8px; width: 90%; max-width: 600px; max-height: 80vh; overflow-y: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3 id="mapTitle" style="margin: 0;">Donor Location Map</h3>
+                <button onclick="closeMapModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">x</button>
+            </div>
+            <div id="mapContainer" class="map-container"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Blood Donation Portal. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/navbar.js"></script>
+    <script src="../js/search.js"></script>
+</body>
+</html>
