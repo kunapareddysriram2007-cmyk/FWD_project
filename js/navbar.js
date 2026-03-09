@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function checkLoginProtection() {
-    const currentPage = window.location.pathname.split("/").pop() || "home.html";
-    const loginRequiredPages = ["home.html", "search.html", "requests.html", "contact.html"];
+    const currentPage = window.location.pathname.split("/").pop() || "Dashboard.html";
+    const loginRequiredPages = ["Dashboard.html", "search.html", "requests.html", "contact.html"];
 
     if (loginRequiredPages.includes(currentPage) && !isLoggedIn()) {
         window.location.href = "login.html";
@@ -139,7 +139,7 @@ function updateNotificationBadge() {
 }
 
 function setActiveNavLink() {
-    const currentPage = window.location.pathname.split("/").pop() || "home.html";
+    const currentPage = window.location.pathname.split("/").pop() || "Dashboard.html";
     document.querySelectorAll("nav a").forEach(function (link) {
         if (link.getAttribute("href") === currentPage) {
             link.classList.add("active");
