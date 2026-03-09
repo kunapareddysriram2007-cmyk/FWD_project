@@ -1,1 +1,3 @@
-/ /html/home.html 302
+/ /index.html 200
+/html/Home.html /html/home.html 301
+/html/Dashboard.html /html/home.html 301

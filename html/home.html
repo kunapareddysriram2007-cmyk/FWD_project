@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Blood Donation Portal</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="container">
+                <div class="logo">Blood Donation Network</div>
+                <ul>
+                    <li><a href="home.html" class="active">Dashboard</a></li>
+                    <li><a href="register.html">Register</a></li>
+                    <li><a href="search.html">Search Donor</a></li>
+                    <li><a href="requests.html">Requests</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="container">
+            <div class="hero dashboard-hero">
+                <h1>Donor Dashboard</h1>
+                <p>Manage your profile, search donors, and respond to blood requests.</p>
+                <div class="btn-group hero-actions">
+                    <a href="search.html" class="btn btn-primary">Find Donors</a>
+                    <!-- <a href="requests.html" class="btn btn-secondary">View Requests</a> -->
+                </div>
+            </div>
+
+            <h2 class="section-title">Overview</h2>
+            <div class="cards-grid dashboard-stats-grid">
+                <article class="card stat-card stat-card-total">
+                    <h3>Total Donors</h3>
+                    <p class="stat-value" id="totalDonors">0</p>
+                </article>
+                <article class="card stat-card stat-card-pending">
+                    <h3>Pending Requests</h3>
+                    <p class="stat-value" id="pendingRequests">0</p>
+                </article>
+                <article class="card stat-card stat-card-accepted">
+                    <h3>Accepted Requests</h3>
+                    <p class="stat-value" id="acceptedRequests">0</p>
+                </article>
+                <article class="card stat-card stat-card-rejected">
+                    <h3>Rejected/Denied</h3>
+                    <p class="stat-value" id="rejectedRequests">0</p>
+                </article>
+            </div>
+
+            <h2 class="section-title">Quick Actions</h2>
+            <div class="cards-grid dashboard-actions-grid">
+                <article class="card action-card">
+                    <h3>Register New Donor</h3>
+                    <p>Add a donor account with location and blood group.</p>
+                    <a href="register.html" class="btn btn-primary">Open Registration</a>
+                </article>
+                <article class="card action-card">
+                    <h3>Search Nearby Donors</h3>
+                    <p>Match by blood group and sort by nearest available donor.</p>
+                    <a href="search.html" class="btn btn-primary">Open Search</a>
+                </article>
+                <article class="card action-card">
+                    <h3>Manage Incoming Requests</h3>
+                    <p>Accept or reject incoming blood requests from recipients.</p>
+                    <a href="requests.html" class="btn btn-primary">Open Requests</a>
+                </article>
+                <article class="card action-card">
+                    <h3>Need Help?</h3>
+                    <p>Use the contact page for questions or support.</p>
+                    <a href="contact.html" class="btn btn-primary">Open Contact</a>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Blood Donation Portal. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/navbar.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const loggedPhone = getLoggedDonorPhone();
+            if (!loggedPhone) return;
+
+            const donors = JSON.parse(localStorage.getItem("donors")) || [];
+            const requests = JSON.parse(localStorage.getItem("requests")) || [];
+
+            const totalDonors = donors.length;
+            const myRequests = requests.filter(r => r.toPhone === loggedPhone || r.fromPhone === loggedPhone);
+            const pending = myRequests.filter(r => r.status === "pending").length;
+            const accepted = myRequests.filter(r => r.status === "accepted").length;
+            const rejected = myRequests.filter(r => r.status === "rejected" || r.status === "denied").length;
+
+            document.getElementById("totalDonors").textContent = String(totalDonors);
+            document.getElementById("pendingRequests").textContent = String(pending);
+            document.getElementById("acceptedRequests").textContent = String(accepted);
+            document.getElementById("rejectedRequests").textContent = String(rejected);
+        });
+    </script>
+</body>
+</html>

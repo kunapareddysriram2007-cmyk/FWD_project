@@ -97,7 +97,10 @@ function updateNotificationBadge() {
     const requests = JSON.parse(localStorage.getItem("requests")) || [];
     // only consider pending requests for notification count
     const unresolvedRequests = requests.filter(r => r.toPhone === loggedPhone && r.status === 'pending');
-    const requestLink = document.querySelector('nav ul li a[href="requests.html"]');
+    const requestLink = Array.from(document.querySelectorAll("nav ul li a"))
+        .find(function (link) {
+            return (link.getAttribute("href") || "").endsWith("requests.html");
+        });
     if (!requestLink) return;
 
     const existingBadge = requestLink.querySelector(".notification-badge");
@@ -139,9 +142,11 @@ function updateNotificationBadge() {
 }
 
 function setActiveNavLink() {
-    const currentPage = window.location.pathname.split("/").pop() || "home.html";
+    const currentPage = window.location.pathname.split("/").pop() || "index.html";
     document.querySelectorAll("nav a").forEach(function (link) {
-        if (link.getAttribute("href") === currentPage) {
+        const href = link.getAttribute("href") || "";
+        const hrefPage = href.split("/").pop();
+        if (hrefPage === currentPage) {
             link.classList.add("active");
         } else {
             link.classList.remove("active");

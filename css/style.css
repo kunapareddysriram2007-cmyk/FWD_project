@@ -1,4 +1,4 @@
-* {
+﻿* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -44,7 +44,9 @@ nav .logo {
 
 nav .logo::before {
     content: "🩸";
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+    color: #ff6fa1;
+    text-shadow: 0 0 10px rgba(255, 111, 161, 0.45);
 }
 
 nav ul {
@@ -225,13 +227,22 @@ textarea:focus {
 }
 
 .btn-secondary {
-    background-color: #6c757d;
+    background-color: #ff0022;
     color: white;
 }
 
 .btn-secondary:hover {
-    background-color: #5a6268;
+    background-color: #d10101;
     transform: translateY(-2px);
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #b52a37;
 }
 
 .btn-small {
@@ -304,6 +315,71 @@ h2.section-title {
 
 .btn-group .btn {
     flex: 1;
+}
+
+.hero-actions {
+    justify-content: center;
+}
+
+.hero-actions .btn {
+    flex: 0 0 auto;
+}
+
+.dashboard-hero {
+    padding: 3.25rem 2rem;
+    background:
+        radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.2), transparent 35%),
+        radial-gradient(circle at 86% 20%, rgba(255, 200, 220, 0.22), transparent 33%),
+        linear-gradient(135deg, #c41e3a 0%, #99172e 100%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.stat-card {
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #f1d9e1;
+}
+
+.stat-card::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #ff6fa1 0%, #c41e3a 100%);
+}
+
+.stat-value {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #c41e3a;
+    margin-top: 0.5rem;
+}
+
+.dashboard-stats-grid {
+    margin-top: 1.25rem;
+}
+
+.stat-card-total::after { background: linear-gradient(90deg, #d81b60, #ff5f9e); }
+.stat-card-pending::after { background: linear-gradient(90deg, #ff9800, #ffb74d); }
+.stat-card-accepted::after { background: linear-gradient(90deg, #2e7d32, #4caf50); }
+.stat-card-rejected::after { background: linear-gradient(90deg, #6a1b9a, #ab47bc); }
+
+.dashboard-actions-grid {
+    margin-top: 1rem;
+}
+
+.action-card {
+    border: 1px solid #ead4dc;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 250, 252, 0.95));
+}
+
+.action-card .btn {
+    width: 100%;
+    text-align: center;
 }
 
 /* Tables */
@@ -624,3 +700,5 @@ h2 {
 .blood-ab {
     background-color: #e8f5e9;
 }
+
+
