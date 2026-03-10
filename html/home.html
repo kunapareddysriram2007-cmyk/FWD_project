@@ -4,50 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blood Donation Portal</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav>
-        <div class="container">
-            <div class="logo">Blood Donation Network</div>
-            <ul>
-                <li><a href="home.html" class="active">Home</a></li>
-                <li><a href="register.html">Register</a></li>
-                <li><a href="search.html">Search Donor</a></li>
-                <li><a href="requests.html">Requests</a></li>
-            </ul>
-        </div>
-    </nav>
+    <nav></nav>
 
     <main>
         <div class="container">
-            <div class="hero">
-                <h1>Save Lives with Blood Donation</h1>
-                <p>Connect donors and patients through location-based matching.</p>
-                <button class="btn btn-primary btn-lg" onclick="window.location.href='register.html'">
-                    Start Donating
-                </button>
-            </div>
+            <section class="hero">
+                <h1>Save Lives Through Fast Blood Donation Support</h1>
+                <p>
+                    Register as a donor, find nearby matching donors, and manage normal or emergency requests
+                    from one clean dashboard.
+                </p>
+                <div class="hero-actions">
+                    <a href="register.html" class="btn btn-primary btn-lg">Register as Donor</a>
+                    <a href="search.html" class="btn btn-secondary btn-lg">Search Donors</a>
+                </div>
+            </section>
 
             <h2 class="section-title">How It Works</h2>
-            <div class="cards-grid">
-                <div class="card">
-                    <h3>Register as Donor</h3>
-                    <p>Create a profile with your blood group and location.</p>
-                </div>
-                <div class="card">
-                    <h3>Find Nearby Donors</h3>
-                    <p>Search compatible donors sorted by nearest available location.</p>
-                </div>
-                <div class="card">
-                    <h3>Send Request</h3>
-                    <p>Request blood anonymously without exposing personal details.</p>
-                </div>
-                <div class="card">
-                    <h3>Manage Requests</h3>
-                    <p>Track incoming donation requests in one dashboard.</p>
-                </div>
-            </div>
+            <section class="cards-grid">
+                <article class="card">
+                    <h3>1. Register</h3>
+                    <p>Create your donor profile with blood group, phone number, city, and optional live location.</p>
+                </article>
+                <article class="card">
+                    <h3>2. Search Nearby</h3>
+                    <p>Detect your location and search blood donors sorted by nearest available distance.</p>
+                </article>
+                <article class="card">
+                    <h3>3. Send Requests</h3>
+                    <p>Send normal or emergency requests with simple status tracking and duplicate prevention.</p>
+                </article>
+                <article class="card">
+                    <h3>4. Manage Responses</h3>
+                    <p>Accept or reject incoming requests and monitor sent requests in real time.</p>
+                </article>
+            </section>
+
+            <section class="panel mt-3">
+                <h2 class="section-title" style="margin-top:0;">Important Note</h2>
+                <p class="text-muted">
+                    This demo stores data in your browser using localStorage. It is good for showcasing the project,
+                    but a real production system should use a database and proper authentication.
+                </p>
+            </section>
         </div>
     </main>
 

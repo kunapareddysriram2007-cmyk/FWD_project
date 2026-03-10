@@ -4,38 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blood Requests - Blood Donation Portal</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav>
-        <div class="container">
-            <div class="logo">Blood Donation Network</div>
-            <ul>
-                <li><a href="home.html">Home</a></li>
-                <li><a href="register.html">Register</a></li>
-                <li><a href="search.html">Search Donor</a></li>
-                <li><a href="requests.html" class="active">Requests</a></li>
-            </ul>
-        </div>
-    </nav>
+    <nav></nav>
 
     <main>
         <div class="container">
             <h2>Donation Requests Dashboard</h2>
-            <p style="margin-top:0.5rem;color:#555;">You can accept or reject incoming requests. Emergency requests may auto-expire after 15 minutes when viewed by requester.</p>
+            <p class="text-muted">
+                Accept or reject requests sent to you. Emergency requests that stay unanswered for more than 15 minutes become auto-denied.
+            </p>
 
-            <div id="noRequestsMessage" class="alert alert-info hidden" style="margin: 1.5rem 0;">
-                You have not received any blood donation requests yet.
-            </div>
+            <div id="requestsAlert" class="alert hidden mt-2"></div>
+            <div id="noRequestsMessage" class="alert alert-info hidden mt-2">You have not received any blood donation requests yet.</div>
 
             <div id="requestsContainer" class="table-container hidden">
-                <table id="requestsTable">
+                <table>
                     <thead>
                         <tr>
                             <th>Requester Name</th>
                             <th>Requester City</th>
                             <th>Requested Time</th>
-                            <th>Emergency</th>
+                            <th>Type</th>
                             <th>Action</th>
                             <th>Status</th>
                         </tr>
